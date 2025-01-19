@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>限度樣品點檢表</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<table style="width: 400px;">
+<div class="container" id="form-section">
+
+<h2>限度樣品點檢表</h2>
+<div class="form-group">
+
+<th for="machine-id">機台編號</th>
+<td style="background-color: #FFF;"><select style="width: 200px; text-align: center;" id="machine-id" onchange="updateMachineInfo()">
+<option value="">--請選擇--</option>
+<option value="S-252" data-name="自動裁線焊線機" data-time="08:00" data-method="DW:DW0001 OK DW0002 NG DW0003外觀 DW2:DW20001 OK DW20002 NG" data-frequency="每小時">S-252</option>
+<option value="S-105" data-name="自動勾彈簧機" data-time="12:00" data-method="工具測量" data-frequency="每班次">S-105</option>
+</select></td>(選擇機台編號 自動帶入以下相關信息)
+</div>
+<div class="machine-info">
+<tr>
+<th>機台名稱</th>
+  <td style="background-color: #FFF;" id="machine-name"></td>
+  </tr>
+  </table>
+    <table>
+    <tr>
+<th>檢驗時間</th>
+<th>檢驗方式</th>
+<th>檢驗頻率</th>
+</tr>
+<tr>
+
+<td id="inspection-time" style="width: 200px; height: 200px; background-color: #FFF;"></td>
+<td id="inspection-method" style="width: 200px; background-color: #FFF;"></td>
+<td id="inspection-frequency" style="width: 200px; background-color: #FFF;"></td>
+</tr>
+</div>
+</table>
+  
+  
+  
+  
+  
+<h4>*****生產線選擇機台編號後 依照上列指示完成下列輸入**** </h4>
+<form id="inspection-form"><br>
+<label>&#160&#160&#160&#160日期：</label>  
+<input type="text" id="current-date" readonly><br><br>
+<label>&#160&#160&#160&#160時間：</label>
+<input type="text" id="current-time" readonly><br><br>
+<label>&#160&#160&#160&#160工單：</label>
+<input type="text" id="work-order">(刷入工單bar code-測試階段手動輸入)<br><br>
+<label>&#160&#160&#160&#160料號：</label>
+<input type="text" id="material-number">(刷工單帶入料號-測試階段手動輸入)<br><br>
+<label>&#160&#160&#160&#160機種：</label>
+<input type="text" id="model">(依料號4-6碼帶入機種-測試階段手動輸入)<br><br>
+<label>操作員：</label>
+<input type="text" id="operator-name">(PDA登入帳號自動帶入-測試階段手動輸入)
+<br>
+<div id="samples">  <br>
+<label>限度樣品編號：</label><br>(依指示刷入限度樣品條碼 如為測試異常手KEY NG備註)<br>
+<input type="text" class="sample-number">
+</div><br>
+<button type="button" onclick="addSample()">新增樣品</button>
+<button type="button" onclick="submitForm()">送出</button>
+<a href="https://ethan11801004.github.io/02/表一/dist/index">機台資料編輯(測試-帳號:1 密碼:1)</a> 
+</form>
+</div>
+<hr>
+<div class="container" id="records-section">
+<h2>記錄表</h2>
+<div class="filters">
+<label>篩選日期：</label>
+<input type="date" id="filter-date-start"> - <input type="date" id="filter-date-end"><br><br>
+<label>機台編號：</label>
+<input type="text" id="filter-machine-id"><br><br>
+<label>&#160&#160&#160&#160&#160&#160&#160機種：</label>
+<input type="text" id="filter-model"><br><br>
+<label>&#160&#160&#160 操作員：</label>
+<input type="text" id="filter-operator"><br><br>
+<button type="button" onclick="filterRecords()">搜尋</button>
+<button type="button" onclick="exportToExcel()">匯出Excel</button>
+</div>
+<table id="records-table">
+<thead>
+<tr>
+<th style="width: 70px;">日期</th><th style="width: 70px;">時間</th><th style="width: 70px;">機台編號</th><th style="width: 100px;">機台名稱</th><th style="width: 100px;">工單</th><th style="width: 100px;">料號</th><th style="width: 100px;">機種</th><th style="width: 100px;">操作員</th><th style="width: 160px;">限度樣品</th><th style="width: 80px;">備註</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</body>
+</html>
